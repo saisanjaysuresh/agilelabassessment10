@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # STAGE 1 & 2: Source Code & Version Control
+    # STAGE 1 & 2
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # STAGE 3: Continuous Integration (Install & Test)
+    # STAGE 3
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -23,7 +23,7 @@ jobs:
       run: |
         python test_app.py
 
-    # STAGE 4: Build Docker Image & Push to Docker Hub (Using unique Git SHA tag)
+    # STAGE 4
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
@@ -39,7 +39,7 @@ jobs:
           ${{ secrets.DOCKERHUB_USERNAME }}/temp-converter:${{ github.sha }}
           ${{ secrets.DOCKERHUB_USERNAME }}/temp-converter:latest
 
-    # STAGE 5: Kubernetes Deployment Validation
+    # STAGE 5
     - name: Deploy to Kubernetes Cluster (Validation Mode)
       run: |
         echo "Exposing application through a Service load balancer configuration..."
